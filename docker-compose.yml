@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: compliance_user
+      POSTGRES_PASSWORD: compliance_password
+      POSTGRES_DB: compliance_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U compliance_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://compliance_user:compliance_password@postgres:5432/compliance_db
+      ENVIRONMENT: production
+      DEBUG: "False"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    command: >
+      sh -c "python -m alembic upgrade head &&
+             gunicorn -w 4 -b 0.0.0.0:8000 main:app"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://backend:8000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

@@ -1,0 +1,10 @@
+.npm/
+.next/
+.nuxt/
+dist/
+.cache/
+.output/
+.env
+.env.local
+.env.*.local
+*.pem
