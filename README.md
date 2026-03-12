@@ -1,6 +1,7 @@
 # Crypto Exchange Compliance Dashboard
 
 A full-stack regulatory compliance management tool built for cryptocurrency exchanges operating under U.S. money transmission and BSA/AML obligations. Designed to surface compliance gaps, track remedial actions, and monitor license status across jurisdictions — the kind of visibility a Chief Compliance Officer actually needs.
+<img width="1196" height="619" alt="Screenshot 2026-03-11 at 9 48 50 PM" src="https://github.com/user-attachments/assets/2e74bdd9-1f1a-459b-ae71-b9af69a0c2ec" />
 
 **🔗 [Live Demo](https://compliance-dashboard-gamma.vercel.app)**
 
