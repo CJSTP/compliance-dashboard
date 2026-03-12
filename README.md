@@ -1,183 +1,182 @@
-# Regulatory Compliance Dashboard
+# Crypto Exchange Compliance Dashboard
 
-A comprehensive dashboard for tracking crypto exchange regulatory compliance, risk assessments, and position limits.
+A full-stack regulatory compliance management tool built for cryptocurrency exchanges operating under U.S. money transmission and BSA/AML obligations. Designed to surface compliance gaps, track remedial actions, and monitor license status across jurisdictions — the kind of visibility a Chief Compliance Officer actually needs.
 
-## Features
+**🔗 [Live Demo](https://compliance-dashboard-gamma.vercel.app)**
 
-- **Compliance Area Management**: Track KYC, AML, and other compliance areas by jurisdiction
-- **Risk Assessment**: Manage risk assessments and track high-risk items
-- **Position Limits**: Monitor asset position limits and utilization across jurisdictions
-- **Audit Logging**: Complete audit trails for all compliance activities
-- **Real-time Monitoring**: Track compliance status and position utilization in real-time
+---
+
+## Why This Exists
+
+Crypto exchanges face a patchwork of state Money Transmitter Licenses (MTLs), ongoing BSA/AML program obligations, and regulatory examination findings that generate remedial action backlogs. Most compliance teams manage this in spreadsheets. This dashboard centralizes it into a real-time, auditable system.
+
+---
+
+## What It Tracks
+
+### 🏛️ MTL License Portfolio
+- License status by state (Active, Pending, Expired, Surrendered)
+- Renewal countdown — flags licenses expiring within 90 days
+- Regulator and application date tracking
+
+### ⚠️ Remedial Actions
+- Open findings from regulatory exams and internal audits
+- Priority levels (Critical, High, Medium, Low)
+- Due date tracking with overdue flagging
+- Source tracking (Regulatory Exam, Internal Audit, Risk Assessment, Management)
+
+### 🔍 BSA/AML Program Health
+- Metric status across core program areas:
+  - Customer Identification Program (CIP)
+  - Transaction Monitoring
+  - SAR Filing
+  - OFAC Screening
+  - Enhanced Due Diligence (EDD)
+  - Training & Independent Testing
+- At-Risk and Deficient indicator counts by program area
+
+### 📋 Compliance Areas & Risk Assessments
+- KYC, AML, sanctions, and other compliance area status by jurisdiction
+- High-risk item flagging with review schedules
+
+### 📊 Position Limits
+- Asset-level position monitoring
+- At-risk and non-compliant position tracking
+
+---
+
+## Tech Stack
+
+**Backend**
+- Python 3.11 / FastAPI
+- SQLAlchemy ORM with SQLite
+- Pydantic v2 for schema validation
+- Deployed on [Render](https://render.com)
+
+**Frontend**
+- React 18 / TypeScript
+- Vite build tool
+- React Router v6
+- Recharts for data visualization
+- Axios for API communication
+- Deployed on [Vercel](https://vercel.com)
+
+---
 
 ## Project Structure
 
 ```
 compliance-dashboard/
-├── backend/              # FastAPI backend
+├── backend/
 │   ├── app/
-│   │   ├── routes/      # API endpoints
-│   │   ├── models/      # SQLAlchemy models
-│   │   ├── schemas/     # Pydantic schemas
-│   │   ├── services/    # Business logic
-│   │   └── db/          # Database configuration
-│   ├── main.py          # FastAPI application
-│   ├── requirements.txt  # Python dependencies
-│   └── .env.example     # Environment variables template
-├── frontend/             # React + TypeScript frontend
-│   ├── src/
-│   │   ├── components/  # React components
-│   │   ├── pages/       # Page components
-│   │   ├── services/    # API client
-│   │   ├── types/       # TypeScript types
-│   │   └── styles/      # CSS styles
-│   ├── package.json     # npm dependencies
-│   └── index.html       # HTML entry point
-└── README.md
+│   │   ├── models/         # SQLAlchemy models (MTL, Remedial, BSA, Compliance, Positions)
+│   │   ├── schemas/        # Pydantic request/response schemas
+│   │   ├── services/       # Business logic layer
+│   │   └── routes/         # FastAPI route handlers
+│   ├── sample_data.py      # Realistic sample compliance data
+│   ├── init_db.py          # Database seeding
+│   └── main.py             # App entrypoint with CORS, routing, startup seeding
+└── frontend/
+    └── src/
+        ├── pages/          # Dashboard, MTLPage, RemedialActionsPage, BSAAMLPage
+        ├── components/     # Navbar, tables, stat cards
+        ├── services/       # Typed API client
+        └── types/          # TypeScript interfaces for all domain models
 ```
 
-## Quick Start
+---
 
-### Prerequisites
+## Running Locally
 
-- Python 3.9+
-- Node.js 16+
-- PostgreSQL 12+ (for production)
+### Backend
 
-### Backend Setup
-
-1. Navigate to the backend directory:
 ```bash
 cd backend
-```
-
-2. Create a virtual environment:
-```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
+source venv/bin/activate
 pip install -r requirements.txt
-```
-
-4. Create a `.env` file from the example:
-```bash
-cp .env.example .env
-```
-
-5. Update the database URL in `.env` (or use SQLite for development):
-```
-DATABASE_URL=sqlite:///./compliance.db
-```
-
-6. Run the FastAPI server:
-```bash
+python init_db.py     # seeds sample data
 python main.py
 ```
 
-The API will be available at `http://localhost:8000`
-- Docs: `http://localhost:8000/docs`
-- OpenAPI: `http://localhost:8000/openapi.json`
+API runs at `http://localhost:8000`
+Interactive docs at `http://localhost:8000/docs`
 
-### Frontend Setup
+### Frontend
 
-1. Navigate to the frontend directory:
 ```bash
 cd frontend
-```
-
-2. Install dependencies:
-```bash
 npm install
-```
-
-3. Start the development server:
-```bash
 npm run dev
 ```
 
-The dashboard will be available at `http://localhost:5173`
+Dashboard runs at `http://localhost:5173`
+
+---
 
 ## API Endpoints
 
-### Compliance Areas
-- `GET /api/compliance/areas` - List all compliance areas
-- `POST /api/compliance/areas` - Create compliance area
-- `GET /api/compliance/areas/{id}` - Get specific area
-- `PUT /api/compliance/areas/{id}` - Update compliance area
-- `GET /api/compliance/areas/overdue-reviews` - Get overdue reviews
+### MTL Licenses
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/mtl/licenses` | All licenses (filterable by status) |
+| GET | `/api/mtl/licenses/expiring-soon` | Licenses expiring within N days |
+| POST | `/api/mtl/licenses` | Create license |
+| PUT | `/api/mtl/licenses/{id}` | Update license |
 
-### Risk Assessments
-- `GET /api/compliance/risk-assessments/area/{id}` - Get assessments for area
-- `POST /api/compliance/risk-assessments` - Create risk assessment
-- `GET /api/compliance/risk-assessments/high-risk` - Get high-risk items
+### Remedial Actions
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/remedial/actions` | All actions (filterable by status/priority) |
+| GET | `/api/remedial/actions/overdue` | Overdue open actions |
+| GET | `/api/remedial/actions/open-critical` | Open critical actions |
+| POST | `/api/remedial/actions` | Create action |
+| PUT | `/api/remedial/actions/{id}` | Update action |
+
+### BSA/AML Indicators
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/bsa/indicators` | All indicators (filterable by status/program area) |
+| GET | `/api/bsa/indicators/deficient` | Deficient indicators only |
+| POST | `/api/bsa/indicators` | Create indicator |
+| PUT | `/api/bsa/indicators/{id}` | Update indicator |
+
+### Compliance Areas
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/compliance/areas` | All areas |
+| GET | `/api/compliance/areas/overdue-reviews` | Areas past review date |
+| GET | `/api/compliance/risk-assessments/high-risk` | High-risk assessments |
 
 ### Position Limits
-- `GET /api/positions/limits` - List all position limits
-- `POST /api/positions/limits` - Create position limit
-- `GET /api/positions/limits/{id}` - Get specific limit
-- `PUT /api/positions/limits/{id}` - Update limit
-- `GET /api/positions/at-risk` - Get at-risk positions
-- `GET /api/positions/non-compliant` - Get non-compliant positions
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/positions/limits` | All position limits |
+| GET | `/api/positions/at-risk` | At-risk positions |
+| GET | `/api/positions/non-compliant` | Non-compliant positions |
 
-### Audit Logs
-- `GET /api/audit/logs` - List audit logs
-- `POST /api/audit/logs` - Create audit log
-- `GET /api/audit/logs/entity/{type}/{id}` - Get logs for entity
+---
 
-## Development
+## Sample Data
 
-### Testing the Backend
+The app seeds realistic sample data on startup including:
+- 8 state MTL licenses (NY, CA, TX, FL, WA, IL, NV, WY) across multiple statuses
+- 10 remedial actions across exam findings and audit observations
+- 13 BSA/AML program metrics across 7 program areas
+- 5 compliance areas with risk assessments
 
-```bash
-cd backend
-pytest
-```
+---
 
-### Building for Production
+## Roadmap
 
-**Backend:**
-```bash
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:8000 main:app
-```
+- [ ] FINRA/SEC regulatory calendar with filing deadline tracking
+- [ ] Transaction monitoring alert queue with SAR workflow
+- [ ] AML risk scoring model for wallet activity
+- [ ] User authentication and role-based access
+- [ ] Export to PDF/Excel for examiner submissions
+- [ ] Email alerts for expiring licenses and overdue actions
 
-**Frontend:**
-```bash
-npm run build
-```
-
-## Configuration
-
-### Environment Variables
-
-Create a `.env` file in the backend directory:
-
-```
-DATABASE_URL=postgresql://user:password@localhost:5432/compliance_db
-ENVIRONMENT=development
-DEBUG=True
-SECRET_KEY=your-secret-key-change-in-production
-ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
-```
-
-## Dashboard Pages
-
-- **Dashboard**: Overview with key metrics and summary charts
-- **Compliance Areas**: Manage compliance areas by jurisdiction and status
-- **Position Limits**: Track position limits and utilization by asset
-- **Audit Logs**: View complete audit trail of all compliance activities
-
-## Key Metrics
-
-- Total compliance areas tracked
-- Compliant vs. non-compliant areas
-- Pending reviews
-- High-risk assessments
-- At-risk positions
-- Non-compliant positions
+---
 
 ## License
 
