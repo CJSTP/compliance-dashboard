@@ -4,10 +4,6 @@ A full-stack regulatory compliance management tool built for cryptocurrency exch
 
 **🔗 [Live Demo](https://compliance-dashboard-gamma.vercel.app)**
 
-##SCREENSHOT
-<img width="2392" height="1238" alt="image" src="https://github.com/user-attachments/assets/c6289dee-6dbe-4918-8f95-7ad6baaa401c" />
-
-
 ---
 
 ## Why This Exists
@@ -181,6 +177,9 @@ The app seeds realistic sample data on startup including:
 - [ ] Email alerts for expiring licenses and overdue actions
 
 ---
+
+<img width="2392" height="1238" alt="image" src="https://github.com/user-attachments/assets/8ee7d31a-312d-4ff6-87f5-1233265e1825" />
+
 
 ## License
 
