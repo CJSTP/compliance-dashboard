@@ -1,8 +1,5 @@
 // API configuration
-const _viteUrl = (import.meta as any).env?.VITE_API_URL ?? '';
-export const API_BASE_URL = (_viteUrl && !_viteUrl.includes('localhost'))
-  ? _viteUrl
-  : 'https://compliance-dashboard-1-9d7l.onrender.com';
+export const API_BASE_URL = 'https://compliance-dashboard-1-9d7l.onrender.com';
 
 // Risk level colors
 export const RISK_COLORS = {
