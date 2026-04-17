@@ -1,6 +1,6 @@
 # Crypto Exchange Compliance Dashboard
 
-A full-stack regulatory compliance management tool built for cryptocurrency exchanges operating under U.S. money transmission and BSA/AML obligations. Designed to surface compliance gaps, track remedial actions, and monitor license status across jurisdictions — the kind of visibility a Chief Compliance Officer actually needs.
+A full-stack regulatory compliance management tool built for cryptocurrency exchanges operating under U.S. money transmission and BSA/AML obligations. Designed to surface compliance gaps, track remedial actions, and monitor license status across jurisdictions.
 
 **🔗 [Live Demo](https://compliance-dashboard-gamma.vercel.app)**
 
@@ -14,18 +14,18 @@ Crypto exchanges face a patchwork of state Money Transmitter Licenses (MTLs), on
 
 ## What It Tracks
 
-### 🏛️ MTL License Portfolio
+###  MTL License Portfolio
 - License status by state (Active, Pending, Expired, Surrendered)
 - Renewal countdown — flags licenses expiring within 90 days
 - Regulator and application date tracking
 
-### ⚠️ Remedial Actions
+### Remedial Actions
 - Open findings from regulatory exams and internal audits
 - Priority levels (Critical, High, Medium, Low)
 - Due date tracking with overdue flagging
 - Source tracking (Regulatory Exam, Internal Audit, Risk Assessment, Management)
 
-### 🔍 BSA/AML Program Health
+### BSA/AML Program Health
 - Metric status across core program areas:
   - Customer Identification Program (CIP)
   - Transaction Monitoring
@@ -35,11 +35,11 @@ Crypto exchanges face a patchwork of state Money Transmitter Licenses (MTLs), on
   - Training & Independent Testing
 - At-Risk and Deficient indicator counts by program area
 
-### 📋 Compliance Areas & Risk Assessments
+### Compliance Areas & Risk Assessments
 - KYC, AML, sanctions, and other compliance area status by jurisdiction
 - High-risk item flagging with review schedules
 
-### 📊 Position Limits
+### Position Limits
 - Asset-level position monitoring
 - At-risk and non-compliant position tracking
 
